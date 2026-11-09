@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#245c3b">
+<meta name="description" content="MyGarden NZ plant identification and care guide">
+<link rel="manifest" href="manifest.webmanifest">
+<title>MyGarden NZ</title>
+<style>
+:root{--green:#245c3b;--green2:#36794d;--mint:#eaf4eb;--cream:#fbfaf5;--ink:#1e2b22;--muted:#68766c;--line:#dce6dc;--white:#fff;--gold:#dcae4d;--shadow:0 8px 26px #183b2512}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(135deg,#19472e,#36794d);color:white;padding:22px 18px 18px;border-radius:0 0 25px 25px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:14px;background:#ffffff22;display:grid;place-items:center;font-size:25px}
+h1{font-size:24px;line-height:1.1;margin:0}.tag{font-size:12px;opacity:.82;margin-top:4px}.location{margin-top:18px;background:#ffffff18;border:1px solid #ffffff33;border-radius:14px;padding:10px 12px;font-size:13px}
+main{max-width:760px;margin:auto;padding:16px 14px 92px}.hero{background:white;border:1px solid var(--line);border-radius:20px;padding:17px;box-shadow:var(--shadow)}
+.hero h2{font-size:20px;margin:0 0 4px}.muted{color:var(--muted)}.small{font-size:12px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+button,.btn{border:0;border-radius:13px;padding:12px 14px;background:var(--green);color:white;font-weight:650;font-size:14px;cursor:pointer;display:inline-flex;justify-content:center;align-items:center;gap:8px}
+button.secondary,.btn.secondary{background:var(--mint);color:var(--green)}button.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:23px 2px 10px}.section-head h2{font-size:17px;margin:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{background:white;border:1px solid var(--line);border-radius:17px;padding:14px;min-height:112px;box-shadow:var(--shadow);cursor:pointer}.tile .emoji{font-size:25px}.tile strong{display:block;margin:6px 0 2px}.tile span{font-size:12px;color:var(--muted)}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:12px;box-shadow:var(--shadow)}
+input,select,textarea{width:100%;border:1px solid #cdd9ce;border-radius:12px;padding:12px;background:#fff;color:var(--ink);font:inherit;margin:6px 0 10px}
+label{font-size:13px;font-weight:650;display:block;margin-top:9px}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#fffffff2;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 5px calc(8px + env(safe-area-inset-bottom));z-index:5}
+.tabs button{background:transparent;color:var(--muted);font-size:11px;padding:6px 8px;display:flex;flex-direction:column;gap:2px;min-width:60px}.tabs button.active{color:var(--green);background:var(--mint)}.tabs b{font-size:19px}
+.view{display:none}.view.active{display:block}
+.result{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.result img{width:82px;height:82px;object-fit:cover;border-radius:12px}
+.pill{display:inline-block;background:var(--mint);color:var(--green);padding:4px 9px;border-radius:30px;font-size:11px;font-weight:700;margin:2px 3px 2px 0}
+.care-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.care{background:#f5f8f3;border-radius:13px;padding:11px}.care b{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}.care span{font-size:14px;font-weight:600}
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.month{background:#f4f7f1;border:1px solid var(--line);border-radius:10px;padding:9px 3px;text-align:center;font-size:12px}.month.current{background:var(--green);color:white}
+.list{padding-left:19px;margin:7px 0}.list li{margin:5px 0}.notice{background:#fff6df;border:1px solid #f0dfb5;color:#66501e;border-radius:12px;padding:11px;font-size:12px;margin-top:12px}
+.hidden{display:none!important}.preview{width:100%;max-height:250px;object-fit:cover;border-radius:14px;margin-top:8px}
+footer{text-align:center;color:var(--muted);font-size:11px;margin:22px 0}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}.actions{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="brand"><div class="logo">🌱</div><div><h1>MyGarden</h1><div class="tag">Grow well. Grow with confidence.</div></div></div><div style="font-size:26px">🇳🇿</div></div>
+ <div class="location">📍 New Zealand garden guide · Wellington planting calendar by default</div>
+</header>
+<main>
+<section id="home" class="view active">
+ <div class="hero">
+  <h2>Your garden, understood.</h2>
+  <div class="muted">Identify plants, learn exactly how to care for them, and plan your garden through the New Zealand seasons.</div>
+  <div class="actions"><button onclick="showView('identify')">📷 Identify a plant</button><button class="secondary" onclick="showView('calendar')">🗓 Planting calendar</button></div>
+ </div>
+ <div class="section-head"><h2>Explore MyGarden</h2><span class="small muted">Choose a guide</span></div>
+ <div class="grid">
+  <div class="tile" onclick="showView('ornamental')"><div class="emoji">🌸</div><strong>Ornamental plants</strong><span>Flowers, shrubs & indoor plants</span></div>
+  <div class="tile" onclick="showView('vegetable')"><div class="emoji">🥕</div><strong>Vegetables & herbs</strong><span>Grow food at home</span></div>
+  <div class="tile" onclick="showView('fruit')"><div class="emoji">🍎</div><strong>Fruit trees</strong><span>Planting, pruning & harvest guides</span></div>
+  <div class="tile" onclick="showView('kitchen')"><div class="emoji">♻️</div><strong>Kitchen fertilisers</strong><span>Reuse food scraps in your garden</span></div>
+  <div class="tile" onclick="showView('calendar')"><div class="emoji">📅</div><strong>NZ planting calendar</strong><span>What to sow this month</span></div>
+  <div class="tile" onclick="showView('saved')"><div class="emoji">🪴</div><strong>My plant collection</strong><span>Your saved plant guides</span></div>
+  <div class="tile" onclick="showView('companions')"><div class="emoji">🤝</div><strong>Companion planting</strong><span>Helpful garden partners</span></div>
+  <div class="tile" onclick="showView('settings')"><div class="emoji">⚙️</div><strong>Settings</strong><span>Connect plant identification</span></div>
+ </div>
+ <div class="panel"><b>🌿 Seasonal tip for November</b><p class="muted" style="margin:5px 0 0">In Wellington, plant warm-season crops in a sunny, sheltered spot. Protect young plants from strong winds and keep soil evenly moist.</p></div>
+</section>
+
+<section id="identify" class="view">
+ <div class="section-head"><h2>📷 Identify a plant</h2></div>
+ <div class="panel">
+  <p class="muted">Take a clear photo of one plant. A leaf and flower photo can improve the result. Your photo is sent to Pl@ntNet for identification.</p>
+  <label>Take a photo or choose from Gallery</label>
+  <input id="plantPhoto" type="file" accept="image/*" capture="environment">
+  <img id="preview" class="preview hidden" alt="Plant preview">
+  <button id="identifyBtn" style="width:100%;margin-top:8px" onclick="identifyPlant()">Identify this plant</button>
+  <div id="idStatus" class="muted small" style="margin-top:9px"></div>
+  <div id="idResults"></div>
+  <div class="notice">Identification is an AI estimate, not a guarantee. Check the suggested species against the plant's leaves, flowers and growing conditions before acting.</div>
+  <p class="small muted">Powered by Pl@ntNet API. You need a free API account and key; see Settings.</p>
+ </div>
+</section>
+
+<section id="ornamental" class="view">
+ <div class="section-head"><h2>🌸 Ornamental plants</h2></div>
+ <input id="ornSearch" placeholder="Search ornamental plants..." oninput="renderCatalog('ornamental')">
+ <div id="ornList" class="grid"></div>
+</section>
+<section id="vegetable" class="view">
+ <div class="section-head"><h2>🥕 Vegetables & herbs</h2></div>
+ <input id="vegSearch" placeholder="Search vegetables and herbs..." oninput="renderCatalog('vegetable')">
+ <div id="vegList" class="grid"></div>
+</section>
+<section id="fruit" class="view">
+ <div class="section-head"><h2>🍎 Fruit trees</h2></div>
+ <p class="small muted">Fruit-tree advice tailored to New Zealand conditions. Choose a tree to see its growing guide.</p>
+ <input id="fruitSearch" placeholder="Search fruit trees..." oninput="renderCatalog('fruit')">
+ <div id="fruitList" class="grid"></div>
+</section>
+
+<section id="kitchen" class="view">
+ <div class="section-head"><h2>♻️ Kitchen fertilisers</h2></div>
+ <p class="small muted">Reuse everyday kitchen scraps to make compost and improve your soil. These are soil amendments, not complete fertilisers.</p>
+ <div class="panel">
+  <h3>🍌 Banana peels</h3>
+  <p><b>Best use:</b> Add chopped peels to a working compost bin and let them break down fully before using the compost.</p>
+  <p><b>How:</b> Chop into small pieces and mix with dry leaves or shredded cardboard. Do not rely on buried fresh peels as a quick potassium feed.</p>
+  <p class="small muted">Suitable for compost destined for fruit trees, vegetables and ornamentals.</p>
+ </div>
+ <div class="panel">
+  <h3>🥚 Eggshells</h3>
+  <p><b>Best use:</b> Compost them, or crush very finely and add modestly to the compost.</p>
+  <p><b>How:</b> Rinse, dry and crush. They break down slowly, so they will not quickly correct a calcium deficiency or change soil pH.</p>
+  <p class="small muted">Do not use eggshells as a substitute for diagnosing blossom-end rot in tomatoes; inconsistent watering is a common factor.</p>
+ </div>
+ <div class="panel">
+  <h3>☕ Used coffee grounds</h3>
+  <p><b>Best use:</b> Add small amounts to compost and mix well with dry brown material.</p>
+  <p><b>How:</b> Let grounds cool, then sprinkle thinly into the compost. Avoid thick layers or piling wet grounds against plant stems.</p>
+  <p class="small muted">Used grounds are not a reliable acidifier for citrus, blueberries or other acid-loving plants.</p>
+ </div>
+ <div class="panel">
+  <h3>🍵 Tea leaves</h3>
+  <p><b>Best use:</b> Add loose tea leaves to compost.</p>
+  <p><b>How:</b> Empty the leaves from the bag if it contains plastic or synthetic mesh. Mix with dry leaves or cardboard.</p>
+ </div>
+ <div class="panel">
+  <h3>🥬 Fruit and vegetable scraps</h3>
+  <p><b>Best use:</b> Make mature compost for the garden.</p>
+  <p><b>How:</b> Chop scraps small and layer with dry leaves, shredded untreated cardboard or paper. Keep the mix moist like a wrung-out sponge and turn it to add air.</p>
+  <p class="small muted">Use finished, earthy-smelling compost as a thin top-dressing around plants, keeping it away from trunks and stems.</p>
+ </div>
+ <div class="panel">
+  <h3>🍚 Rice-rinse water</h3>
+  <p><b>Recommendation:</b> Do not treat this as a dependable fertiliser. Its nutrient content is low and variable. If you reuse plain, unsalted water, use it sparingly on outdoor soil only, and stop if it smells or attracts pests.</p>
+ </div>
+ <div class="panel">
+  <h3>🌿 Simple kitchen-scrap compost recipe</h3>
+  <ol>
+   <li>Collect fruit and vegetable scraps, coffee grounds and tea leaves.</li>
+   <li>Mix with plenty of dry leaves, torn cardboard or other suitable brown material.</li>
+   <li>Keep it damp, not soggy, and turn or mix regularly for airflow.</li>
+   <li>Wait until it is dark, crumbly and smells earthy before using it.</li>
+   <li>Spread a thin layer on the soil surface; do not pile against trunks.</li>
+  </ol>
+ </div>
+ <div class="notice"><b>Important safety:</b> For a standard home compost bin, keep out meat, fish, dairy, oils, salty foods, pet waste and diseased plants. These can cause odours, attract pests or create hygiene problems. Follow your local council's composting rules. Kitchen-scrap compost improves soil but does not supply every nutrient in the right balance; use a suitable fertiliser when a plant needs one.</div>
+ <p class="small muted">New Zealand guidance: <a href="https://wellington.govt.nz/services/rubbish-recycling-and-waste/reducing-your-waste/composting" target="_blank" rel="noopener">Wellington City Council composting</a> · <a href="https://environment.govt.nz/what-you-can-do/campaigns/recycle/kerbside-recycling-food-scraps/" target="_blank" rel="noopener">Ministry for the Environment food scraps guide</a>.</p>
+</section>
+
+<section id="detail" class="view">
+ <button class="ghost" onclick="goBack()">← Back</button>
+ <div id="detailContent"></div>
+</section>
+
+<section id="calendar" class="view">
+ <div class="section-head"><h2>🗓 New Zealand planting calendar</h2></div>
+ <div class="panel">
+  <label>Choose your region</label>
+  <select id="region" onchange="renderCalendar()"><option>Wellington / Lower North Island</option><option>Auckland / Northland</option><option>Central North Island</option><option>Canterbury</option><option>Otago / Southland</option></select>
+  <div id="calendarMonths" class="months"></div>
+  <div id="calendarContent"></div>
+  <div class="notice">Planting dates are guides. Local frost, wind, soil temperature and shelter can shift the best planting time.</div>
+ </div>
+</section>
+
+<section id="companions" class="view">
+ <div class="section-head"><h2>🤝 Companion planting</h2></div>
+ <div class="panel">
+  <label>Choose a vegetable</label>
+  <select id="compSelect" onchange="renderCompanions()"></select>
+  <div id="compContent"></div>
+ </div>
+</section>
+
+<section id="saved" class="view">
+ <div class="section-head"><h2>🪴 My plant collection</h2></div>
+ <div id="savedList" class="panel"></div>
+</section>
+
+<section id="settings" class="view">
+ <div class="section-head"><h2>⚙️ Settings & identification</h2></div>
+ <div class="panel">
+  <h3 style="margin:0">Connect Pl@ntNet</h3>
+  <p class="muted small">Create an account, generate an API key, then paste it below. The key is stored only in this browser on your phone.</p>
+  <button class="secondary" onclick="window.open('https://my.plantnet.org/','_blank')">Open Pl@ntNet developer account ↗</button>
+  <label>Pl@ntNet API key</label><input id="apiKey" type="password" placeholder="Paste your private API key">
+  <button onclick="saveKey()">Save API key</button>
+  <p id="keyStatus" class="small muted"></p>
+  <div class="notice">For browser access, Pl@ntNet requires you to enable “Expose my API key” and add the website's exact HTTPS domain to “Authorized domains” in API-key settings. Do not share your key.</div>
+  <p class="small">API documentation: <a href="https://my.plantnet.org/doc/getting-started/introduction" target="_blank">Pl@ntNet setup instructions</a>.</p>
+ </div>
+ <div class="panel">
+  <h3 style="margin:0">About MyGarden</h3>
+  <p class="muted small">A New Zealand-focused plant-care companion. Plant advice is general guidance; follow product labels for fertilizer rates and check local conditions.</p>
+  <button class="ghost" onclick="if(confirm('Clear your saved plant collection and API key from this browser?')){localStorage.clear();location.reload()}">Clear local app data</button>
+ </div>
+</section>
+<footer>MyGarden NZ · Plant care made simple 🌱</footer>
+</main>
+<nav class="tabs">
+ <button class="active" data-view="home" onclick="showView('home')"><b>⌂</b>Home</button>
+ <button data-view="identify" onclick="showView('identify')"><b>📷</b>Identify</button>
+ <button data-view="calendar" onclick="showView('calendar')"><b>🗓</b>Calendar</button>
+ <button data-view="saved" onclick="showView('saved')"><b>🪴</b>My plants</button>
+ <button data-view="settings" onclick="showView('settings')"><b>⚙</b>Settings</button>
+</nav>
+<script>
+const plants = [
+{id:'tomato',name:'Tomato',sci:'Solanum lycopersicum',type:'vegetable',emoji:'🍅',sun:'Full sun (6–8+ hours)',place:'Outdoor; warm, sheltered position',water:'Deep watering at soil level; keep evenly moist, not waterlogged.',soil:'Fertile, free-draining soil rich in compost; stake or cage plants.',feed:'Use a balanced vegetable fertilizer at planting. Once flowering and fruiting, use a tomato fertilizer according to its label, commonly every 1–2 weeks for liquid feeds.',months:'October–December plant seedlings; start indoors August–October',companions:['Basil','Marigold','Carrot','Parsley'],avoid:['Potato','Fennel'],prune:'Remove lower leaves touching soil; train and tie as needed. Avoid removing too much foliage.',harvest:'Harvest when fruit has developed full colour and is slightly yielding.',tips:'Avoid wetting leaves. In windy Wellington, use a sturdy stake and sheltered sunny position.'},
+{id:'basil',name:'Basil',sci:'Ocimum basilicum',type:'vegetable',emoji:'🌿',sun:'Full sun to light afternoon shade',place:'Outdoor in warm months; bright indoor windowsill',water:'Water when the top 2 cm of soil begins to dry.',soil:'Rich, moist but free-draining soil.',feed:'Light balanced liquid feed every 3–4 weeks during active growth; avoid overfeeding.',months:'October–January sow or plant in warm conditions',companions:['Tomato','Capsicum','Lettuce'],avoid:['Rue'],prune:'Pinch growing tips regularly above a pair of leaves; remove flower spikes to encourage leafy growth.',harvest:'Pick tips regularly once the plant is established.',tips:'Protect from cold and strong wind.'},
+{id:'carrot',name:'Carrot',sci:'Daucus carota subsp. sativus',type:'vegetable',emoji:'🥕',sun:'Full sun',place:'Outdoor garden bed or deep container',water:'Keep seedbed consistently moist until germination; then water deeply as needed.',soil:'Loose, stone-free, fine soil. Avoid fresh manure.',feed:'Usually needs little fertilizer. Use a modest low-nitrogen vegetable feed if soil is poor; excess nitrogen gives leafy tops.',months:'September–April in many Wellington gardens',companions:['Onion','Leek','Lettuce','Pea'],avoid:['Dill'],prune:'Thin seedlings carefully to final spacing; do not disturb roots.',harvest:'Harvest when roots reach useful size; check a sample first.',tips:'Sow directly where they will grow. Keep soil moist during germination.'},
+{id:'lettuce',name:'Lettuce',sci:'Lactuca sativa',type:'vegetable',emoji:'🥬',sun:'Full sun in cool weather; partial shade in summer',place:'Outdoor beds, pots or bright sheltered position',water:'Regular water; do not let shallow roots dry out.',soil:'Moisture-retentive, fertile soil with compost.',feed:'Balanced liquid fertilizer at half strength every 2–3 weeks if growing in containers.',months:'Most months; best in cooler seasons, provide shade in hot weather',companions:['Carrot','Radish','Strawberry','Chives'],avoid:['Broccoli nearby if crowded'],prune:'Harvest outer leaves or cut whole head; remove damaged leaves.',harvest:'Pick outer leaves when large enough or harvest whole heads.',tips:'Succession sow every 2–3 weeks for a steady supply.'},
+{id:'courgette',name:'Courgette',sci:'Cucurbita pepo',type:'vegetable',emoji:'🥒',sun:'Full sun',place:'Outdoor, warm sheltered spot with room to spread',water:'Water deeply at the base; keep moisture steady when fruiting.',soil:'Rich composted soil, free-draining.',feed:'Compost at planting; balanced liquid feed every 2–3 weeks once flowering if needed.',months:'October–December plant seedlings; sow September–January',companions:['Nasturtium','Marigold','Corn'],avoid:['Potato'],prune:'Remove old diseased leaves; avoid cutting healthy foliage heavily.',harvest:'Pick young fruit frequently, usually 15–20 cm long.',tips:'Bees help pollination. Protect from cold wind when young.'},
+{id:'capsicum',name:'Capsicum',sci:'Capsicum annuum',type:'vegetable',emoji:'🫑',sun:'Full sun, ideally 6–8+ hours',place:'Outdoor in a warm sheltered spot or greenhouse',water:'Keep evenly moist; avoid waterlogging.',soil:'Warm, fertile, free-draining soil.',feed:'Balanced feed during establishment; switch to tomato/fruiting fertilizer when flowers appear, following label directions.',months:'October–December after frost risk; grow in warm spot',companions:['Basil','Carrot','Onion'],avoid:['Fennel'],prune:'Stake if heavy with fruit; remove damaged leaves.',harvest:'Pick green or wait for red/yellow colour depending on variety.',tips:'Needs warmth; use a greenhouse or warm wall in cooler areas.'},
+{id:'broccoli',name:'Broccoli',sci:'Brassica oleracea var. italica',type:'vegetable',emoji:'🥦',sun:'Full sun',place:'Outdoor; protect from strong wind',water:'Regular deep watering, especially while heads form.',soil:'Fertile soil with compost; firm ground helps support plants.',feed:'Apply a nitrogen-containing vegetable fertilizer during leafy growth, following label; avoid excess late feeding.',months:'January–May and July–November depending on variety',companions:['Celery','Onion','Dill'],avoid:['Strawberry','Tomato'],prune:'Remove yellow leaves; harvest central head before flowers open.',harvest:'Cut central head with a length of stem; side shoots may follow.',tips:'Use insect mesh to protect from cabbage white butterfly and other pests.'},
+{id:'potato',name:'Potato',sci:'Solanum tuberosum',type:'vegetable',emoji:'🥔',sun:'Full sun',place:'Outdoor garden bed or potato bag',water:'Keep evenly moist, especially during flowering and tuber formation.',soil:'Loose, fertile, free-draining soil.',feed:'Use potato fertilizer at planting as directed; avoid high nitrogen which encourages foliage over tubers.',months:'September–December plant seed potatoes; timing varies by region',companions:['Beans','Corn','Marigold'],avoid:['Tomato','Pumpkin'],prune:'Earth up stems as they grow, covering developing tubers.',harvest:'New potatoes after flowering; main crop when foliage yellows and dies back.',tips:'Do not eat green potatoes. Rotate beds to reduce disease.'},
+{id:'hydrangea',name:'Hydrangea',sci:'Hydrangea macrophylla',type:'ornamental',emoji:'🌺',sun:'Morning sun and afternoon shade; sheltered',place:'Outdoor shrub; suitable for large containers',water:'Needs regular water, especially in dry weather; avoid waterlogging.',soil:'Moist, rich, well-drained soil with compost.',feed:'Apply a slow-release shrub fertilizer in spring; optional light follow-up after flowering. Follow label rates.',months:'Plant autumn or spring; avoid hot, dry periods',companions:['Hosta','Camellia','Heuchera'],avoid:['Plants needing very dry soil'],prune:'Prune according to variety. Many mophead types flower on old wood; remove dead stems after flowering, not all old growth.',harvest:'Not harvested; enjoy flowers. Cut blooms for arrangements.',tips:'Flower colour can be influenced by soil pH in some varieties; not all cultivars change colour.'},
+{id:'camellia',name:'Camellia',sci:'Camellia japonica',type:'ornamental',emoji:'🌸',sun:'Partial shade; morning sun is often suitable',place:'Outdoor shrub or large pot',water:'Keep evenly moist while establishing; water during prolonged dry spells.',soil:'Acidic, humus-rich, free-draining soil.',feed:'Use an acid-loving plant fertilizer after flowering in spring; follow label rates and avoid feeding late in the season.',months:'Autumn or spring planting',companions:['Azalea','Rhododendron','Pieris'],avoid:['Plants needing alkaline soil'],prune:'Lightly shape after flowering; remove dead or crossing branches.',harvest:'Ornamental flowering shrub.',tips:'Mulch shallow roots; protect buds from harsh wind and hot afternoon sun.'},
+{id:'peace-lily',name:'Peace lily',sci:'Spathiphyllum wallisii',type:'ornamental',emoji:'🪴',sun:'Bright indirect light; tolerates lower light',place:'Indoor houseplant',water:'Water when the top 2–3 cm of mix dries; empty excess water from saucer.',soil:'Loose indoor potting mix with good drainage.',feed:'Half-strength balanced indoor plant fertilizer every 6–8 weeks in spring and summer; little or none in winter.',months:'Repot in spring when root-bound',companions:['Other indoor foliage plants with similar light needs'],avoid:['Direct hot sun'],prune:'Remove yellow leaves and spent flower stems at the base.',harvest:'Not harvested.',tips:'Keep away from pets that may chew it; peace lily is toxic if eaten.'},
+{id:'monstera',name:'Monstera',sci:'Monstera deliciosa',type:'ornamental',emoji:'🌿',sun:'Bright indirect light; avoid harsh direct sun',place:'Indoor; warm room with support pole',water:'Allow top few centimetres of soil to dry before watering.',soil:'Chunky, airy houseplant mix with bark and perlite.',feed:'Balanced indoor plant fertilizer every 4–6 weeks in spring and summer; reduce in winter.',months:'Repot in spring when roots fill the pot',companions:['Philodendron','Pothos (similar indoor conditions)'],avoid:['Cold draughts','Strong midday sun'],prune:'Trim damaged leaves; provide a moss pole or support.',harvest:'Not harvested.',tips:'Wipe leaves clean. Toxic if chewed by pets.'},
+{id:'lavender',name:'Lavender',sci:'Lavandula angustifolia',type:'ornamental',emoji:'💜',sun:'Full sun (6–8+ hours)',place:'Outdoor garden or pot; excellent drainage essential',water:'Low once established; let soil dry between watering.',soil:'Free-draining, lean soil; dislikes wet feet.',feed:'Usually needs little fertilizer. Avoid high-nitrogen feeds; a light slow-release feed in spring only if growth is poor.',months:'Plant spring or autumn; avoid waterlogged winter soil',companions:['Rosemary','Sage','Thyme'],avoid:['Moisture-loving plants'],prune:'Trim lightly after flowering, keeping green growth; do not cut hard into old woody stems.',harvest:'Cut flower stems as blooms begin opening.',tips:'A sunny, airy position helps prevent fungal problems.'},
+{id:'rose',name:'Rose',sci:'Rosa spp.',type:'ornamental',emoji:'🌹',sun:'Full sun, ideally 6+ hours',place:'Outdoor garden or deep container',water:'Deeply at soil level; avoid frequent shallow watering.',soil:'Fertile, well-drained soil enriched with compost.',feed:'Rose fertilizer in early spring and after the first flush if product label recommends; stop late-season feeding.',months:'Plant bare-root roses in winter; container roses most of year avoiding extremes',companions:['Lavender','Alliums','Catmint'],avoid:['Crowded plants with poor airflow'],prune:'Prune according to rose type, generally late winter; remove dead and crossing stems.',harvest:'Cut flowers with clean sharp secateurs.',tips:'Provide airflow and monitor black spot, aphids and mildew.'},
+{id:'orchid',name:'Moth orchid',sci:'Phalaenopsis spp.',type:'ornamental',emoji:'🌼',sun:'Bright indirect light',place:'Indoor; avoid cold windows and draughts',water:'Water when roots turn silvery and potting medium is nearly dry; drain fully.',soil:'Orchid bark mix, not ordinary potting soil.',feed:'Use orchid fertilizer at weak strength during active growth, following label; flush with plain water periodically.',months:'Repot after flowering or when bark breaks down',companions:['Other warm indoor orchids'],avoid:['Standing water in crown','Direct hot sun'],prune:'After flowering, trim the flower spike according to plant health and type; remove dead roots at repotting.',harvest:'Not harvested.',tips:'Healthy roots are firm; avoid leaving water trapped in the leaf crown.'},
+{id:'apple',name:'Apple',sci:'Malus domestica',type:'fruit',emoji:'🍎',sun:'Full sun (6–8+ hours)',place:'Outdoor; sheltered, well-drained site',water:'Deep water during dry spells, especially while fruit is sizing; keep young trees moist.',soil:'Deep, fertile, free-draining soil enriched with compost.',feed:'Fruit-tree or balanced slow-release fertiliser in spring, following the label; avoid excess nitrogen.',months:'Plant bare-root trees in winter; container trees in autumn, winter or spring.',companions:['Comfrey','chives','nasturtium','calendula'],avoid:['Allow room for mature canopy'],prune:'Prune in winter while dormant; remove dead, damaged, crossing and inward-growing branches.',harvest:'Late summer to autumn, depending on variety; pick when mature and easily lifted.',tips:'Many apples need a compatible pollinating variety flowering at the same time. Check variety and rootstock for Wellington.'},
+{id:'pear',name:'Pear',sci:'Pyrus communis',type:'fruit',emoji:'🍐',sun:'Full sun',place:'Outdoor; sheltered position with good airflow',water:'Water while establishing and during prolonged dry weather.',soil:'Deep, fertile, well-drained soil.',feed:'Apply fruit-tree fertiliser in spring as directed; avoid excess nitrogen.',months:'Plant bare-root trees in winter; container trees in autumn, winter or spring.',companions:['Chives','comfrey','nasturtium'],avoid:['Avoid crowding and persistently wet soil'],prune:'Prune in winter while dormant; remove dead, crossing and congested branches.',harvest:'Late summer to autumn; many European pears are picked mature but firm and ripened indoors.',tips:'Many varieties crop better with a compatible pollinator nearby. Check before buying.'},
+{id:'lemon',name:'Lemon',sci:'Citrus limon',type:'fruit',emoji:'🍋',sun:'Full sun; warm north-facing position',place:'Outdoor in a sheltered, frost-protected spot; large pot in colder sites',water:'Water deeply in dry weather, especially in summer and in pots; never leave roots waterlogged.',soil:'Free-draining soil with compost; slightly acidic conditions suit citrus.',feed:'Use citrus fertiliser during spring and summer, following label rates.',months:'Plant in spring after the worst frosts; avoid cold, wet soil.',companions:['Marigold','borage','sweet alyssum'],avoid:['Avoid heavy competition around roots'],prune:'Usually needs only light shaping and removal of dead, damaged or crossing growth.',harvest:'Can crop at different times through the year; taste-test for ripeness.',tips:'Wellington wind and cold can stress lemons. Meyer is a useful option; protect from wind and frost.'},
+{id:'mandarin',name:'Mandarin',sci:'Citrus reticulata',type:'fruit',emoji:'🍊',sun:'Full sun and warmth',place:'Outdoor in a sheltered sunny position; large pot if needed',water:'Keep evenly moist while establishing; water more in dry summer weather.',soil:'Fertile, slightly acidic, free-draining soil.',feed:'Apply citrus fertiliser in spring and summer according to label.',months:'Best planted in spring once frost risk has eased.',companions:['Borage','marigold','sweet alyssum'],avoid:['Avoid waterlogged soil and exposed windy sites'],prune:'Lightly shape after harvest; remove dead and crossing branches.',harvest:'Usually autumn to winter; taste-test because peel colour can precede sweetness.',tips:'Choose a cool-climate-suitable variety and provide frost and wind protection.'},
+{id:'feijoa',name:'Feijoa',sci:'Acca sellowiana',type:'fruit',emoji:'🟢',sun:'Full sun for best cropping; tolerates light shade',place:'Outdoor shrub or small tree; suitable for hedging',water:'Water regularly while young and during dry periods as fruit develops.',soil:'Adaptable, well-drained soil enriched with compost; mulch.',feed:'Balanced fruit-tree fertiliser in spring according to label; add compost and mulch annually.',months:'Autumn or spring; choose a sheltered site in cooler areas.',companions:['A second compatible feijoa variety','borage','comfrey'],avoid:['Avoid exposed windy sites and severe waterlogging'],prune:'Lightly thin after harvest for airflow and shape; retain productive growth.',harvest:'Autumn; ripe fruit usually drops, so collect frequently.',tips:'Two different compatible varieties often improve pollination and cropping.'},
+{id:'plum',name:'Plum',sci:'Prunus domestica',type:'fruit',emoji:'🟣',sun:'Full sun',place:'Outdoor; sunny, sheltered site with airflow',water:'Water young trees regularly; keep moisture steady during fruit development.',soil:'Fertile, well-drained soil.',feed:'Balanced fruit-tree fertiliser in spring as directed; mulch away from trunk.',months:'Plant bare-root trees in winter; container trees in autumn or spring.',companions:['Comfrey','chives','nasturtium'],avoid:['Avoid poorly drained soil and overcrowding'],prune:'Prune in late summer after harvest on a dry day; avoid winter pruning due to silver leaf risk.',harvest:'Summer to early autumn, depending on variety.',tips:'Pollination needs vary. Some plums are self-fertile; others need a compatible partner.'},
+{id:'peach',name:'Peach',sci:'Prunus persica',type:'fruit',emoji:'🍑',sun:'Full sun; warm, sheltered position',place:'Outdoor against a sunny wall or protected spot',water:'Water deeply in dry weather and while fruit swells; avoid waterlogging.',soil:'Well-drained, fertile soil enriched with organic matter.',feed:'Fruit-tree fertiliser in spring according to label; keep mulch away from trunk.',months:'Plant bare-root trees in winter; spring planting can suit colder sites.',companions:['Comfrey','chives','nasturtium'],avoid:['Avoid wet, shaded and windy positions'],prune:'Prune in late summer after harvest, not winter, to reduce silver leaf disease risk.',harvest:'Usually summer; fruit softens slightly and becomes fragrant when ripe.',tips:'Choose a variety suited to local winter chill; protect blossoms from late frost.'},
+{id:'nectarine',name:'Nectarine',sci:'Prunus persica var. nucipersica',type:'fruit',emoji:'🍑',sun:'Full sun',place:'Outdoor in a warm, sheltered, ventilated spot',water:'Water during establishment and fruit development; avoid waterlogging.',soil:'Fertile, free-draining soil.',feed:'Balanced fruit-tree fertiliser in spring following the label.',months:'Plant bare-root trees in winter; spring planting may suit colder gardens.',companions:['Comfrey','chives','nasturtium'],avoid:['Avoid cold, wet and poorly ventilated sites'],prune:'Prune in late summer after harvest; do not winter-prune stonefruit.',harvest:'Summer, when fragrant, coloured and slightly yielding.',tips:'Needs a sunny sheltered position; protect flowers from late frosts.'},
+{id:'avocado',name:'Avocado',sci:'Persea americana',type:'fruit',emoji:'🥑',sun:'Full sun; protect from strong wind and frost',place:'Outdoor only in a warm microclimate; large container in colder areas',water:'Water deeply but allow excellent drainage; never keep roots waterlogged.',soil:'Very free-draining soil; sensitive to poor drainage and root rot.',feed:'Use avocado-specific fertiliser according to label; mulch clear of trunk.',months:'Spring to early summer is often safest in cooler regions; protect from frost and wind.',companions:['Compatible Type A or Type B avocado may improve pollination; borage'],avoid:['Avoid heavy clay, waterlogging, salt and exposed wind'],prune:'Keep pruning light; remove dead or damaged branches and shape gradually.',harvest:'Harvest timing varies by cultivar; fruit generally ripens after picking.',tips:'Challenging in many Wellington gardens. Needs a warm, frost-sheltered, well-drained site.'},
+{id:'fig',name:'Fig',sci:'Ficus carica',type:'fruit',emoji:'🟤',sun:'Full sun and warmth',place:'Outdoor against a sunny wall or in a large container',water:'Water while establishing and during dry spells; established trees tolerate some dryness.',soil:'Well-drained soil; tolerates poorer soils.',feed:'Feed lightly in spring only if growth is weak; excess nitrogen can reduce fruiting.',months:'Plant in autumn or spring.',companions:['Lavender','thyme','borage'],avoid:['Avoid overwatering and excessive fertiliser'],prune:'Prune lightly in winter to remove dead or crossing branches; sap can irritate skin.',harvest:'Late summer to autumn when figs soften and droop; they do not ripen well after picking.',tips:'Choose an early-ripening variety in cooler areas and the warmest sunny spot.'},
+{id:'persimmon',name:'Persimmon',sci:'Diospyros kaki',type:'fruit',emoji:'🟠',sun:'Full sun',place:'Outdoor in a sunny, sheltered position',water:'Water regularly while young and during dry periods.',soil:'Deep, fertile, well-drained soil.',feed:'Modest balanced fertiliser in spring according to label; avoid excess nitrogen.',months:'Plant bare-root trees in winter or container trees in autumn/spring.',companions:['Comfrey','borage','chives'],avoid:['Avoid waterlogged soil and competition around young roots'],prune:'Train young trees to a strong framework; lightly prune in winter while dormant.',harvest:'Autumn to early winter; astringent varieties must soften fully before eating.',tips:'Choose a cultivar suited to your climate; pollination needs vary by variety.'},
+{id:'apricot',name:'Apricot',sci:'Prunus armeniaca',type:'fruit',emoji:'🍑',sun:'Full sun; warm, dry and sheltered',place:'Outdoor against a warm wall or protected site',water:'Water during establishment and dry periods; avoid wet soil around roots.',soil:'Deep, fertile, sharply drained soil.',feed:'Balanced fruit-tree fertiliser in spring according to label.',months:'Plant bare-root trees in winter in a frost-protected site.',companions:['Comfrey','chives','nasturtium'],avoid:['Avoid frost pockets, damp sites and exposed wind'],prune:'Prune in late summer after harvest, not winter, to reduce silver leaf risk.',harvest:'Summer, when golden, slightly soft and sweetly aromatic.',tips:'Early blossom is vulnerable to spring frost; can be difficult in cool, damp Wellington.'},
+{id:'cherry',name:'Cherry',sci:'Prunus avium',type:'fruit',emoji:'🍒',sun:'Full sun',place:'Outdoor; sheltered site with room for canopy',water:'Water while establishing and during dry spells; avoid waterlogged soil.',soil:'Fertile, deep, well-drained soil.',feed:'Balanced fruit-tree fertiliser in spring following label rates; mulch annually.',months:'Plant bare-root trees in winter or container trees in autumn/spring.',companions:['Comfrey','borage','chives'],avoid:['Avoid waterlogged sites; protect fruit from birds'],prune:'Prune in summer after harvest, in dry weather; avoid winter pruning.',harvest:'Usually summer; protect ripening fruit from birds.',tips:'Many sweet cherries need a compatible pollinator; some cultivars are self-fertile.'},
+{id:'tamarillo',name:'Tamarillo',sci:'Solanum betaceum',type:'fruit',emoji:'🍅',sun:'Full sun to light shade; shelter from wind',place:'Outdoor in a warm, frost-free microclimate; container can be moved under cover',water:'Keep soil consistently moist in warm weather, with excellent drainage.',soil:'Rich, fertile, moisture-retentive but free-draining soil.',feed:'Balanced fruit or vegetable fertiliser during active growth according to label.',months:'Plant in spring after frost risk has passed; protect from cold winds.',companions:['Borage','marigold','basil'],avoid:['Avoid frost, strong wind and waterlogged soil'],prune:'Pinch or lightly prune for a sturdy branching framework; remove damaged growth.',harvest:'Usually autumn to winter once fruit is fully coloured and comes away easily.',tips:'Frost-sensitive; use a sheltered wall or container in exposed Wellington gardens.'},
+{id:'guava',name:'Guava',sci:'Psidium guajava',type:'fruit',emoji:'🍈',sun:'Full sun and warmth',place:'Outdoor only in a warm sheltered site; container may help in cooler areas',water:'Water regularly during establishment and dry summer weather.',soil:'Fertile, well-drained soil enriched with compost.',feed:'Balanced fruit-tree fertiliser in spring and summer according to label.',months:'Plant in spring after frost risk; avoid cold, wet conditions.',companions:['Borage','marigold','comfrey'],avoid:['Avoid frost pockets and exposed windy sites'],prune:'Lightly shape after harvest; remove dead or crossing branches.',harvest:'Late summer to autumn depending on species and cultivar.',tips:'Common guava is frost-sensitive; strawberry and feijoa guavas are generally better for cooler NZ gardens.'},
+{id:'lime',name:'Lime',sci:'Citrus aurantiifolia',type:'fruit',emoji:'🟢',sun:'Full sun; warmest sheltered position',place:'Outdoor in a frost-free microclimate or large protective pot',water:'Water deeply in dry weather; check container plants often and ensure drainage.',soil:'Slightly acidic, fertile, free-draining soil.',feed:'Use citrus fertiliser during spring and summer according to label.',months:'Plant in spring after frost risk; in cooler areas grow in a pot and protect in winter.',companions:['Borage','marigold','sweet alyssum'],avoid:['Avoid frost, cold wind and waterlogged soil'],prune:'Lightly shape after frost risk has passed; remove dead, damaged and crossing growth.',harvest:'Pick when fruit reaches useful size and flavour; limes may stay green when ripe.',tips:'Limes are more cold-sensitive than lemons and need a particularly warm sheltered Wellington site.'}
+];
+const calendar = {
+"January":["Beans","Beetroot","Carrot","Courgette","Cucumber","Lettuce","Tomato (early)","Basil","Sweetcorn"],
+"February":["Beetroot","Carrot","Lettuce","Silverbeet","Spinach","Broad beans","Spring onion"],
+"March":["Broccoli","Carrot","Spinach","Silverbeet","Lettuce","Peas","Broad beans","Radish"],
+"April":["Peas","Spinach","Silverbeet","Lettuce","Carrot","Broad beans","Garlic","Onion"],
+"May":["Garlic","Broad beans","Peas","Spinach","Silverbeet","Onion","Lettuce (winter)"],
+"June":["Garlic","Broad beans","Peas","Spinach","Onion","Shallots"],
+"July":["Peas","Broad beans","Spinach","Onion","Shallots","Early potatoes (mild sites)"],
+"August":["Peas","Broad beans","Carrot","Beetroot","Lettuce","Spinach","Potatoes (mild sites)"],
+"September":["Beetroot","Peas","Carrot","Lettuce","Silverbeet","Potatoes","Broccoli","Radish"],
+"October":["Tomato seedlings (sheltered)","Basil","Beans","Courgette","Cucumber","Capsicum (warm sites)","Carrot","Lettuce"],
+"November":["Tomato","Basil","Beans","Courgette","Cucumber","Capsicum","Sweetcorn","Carrot","Lettuce"],
+"December":["Beans","Tomato","Basil","Courgette","Cucumber","Sweetcorn","Carrot","Lettuce","Beetroot"]
+};
+const companions = {
+"Tomato":{good:"Basil, marigold, carrot, parsley",avoid:"Potato and fennel",why:"Basil and flowering plants can support garden diversity; keep tomatoes away from potatoes because they share some diseases."},
+"Carrot":{good:"Onion, leek, lettuce, peas",avoid:"Dill",why:"Onion-family crops are commonly paired with carrots; mixed planting may help diversify pest pressure."},
+"Broccoli":{good:"Celery, onion, dill",avoid:"Strawberry and tomato",why:"Use insect mesh for brassicas; companion planting does not replace pest protection."},
+"Capsicum":{good:"Basil, carrot, onion",avoid:"Fennel",why:"Choose companions with similar sun and water needs; avoid crowding."},
+"Lettuce":{good:"Carrot, radish, chives, strawberry",avoid:"Crowding by large sprawling crops",why:"Fast-growing lettuce can use gaps between slower crops."},
+"Courgette":{good:"Nasturtium, marigold, corn",avoid:"Potato",why:"Allow generous space and airflow around courgette leaves."},
+"Potato":{good:"Beans, corn, marigold",avoid:"Tomato",why:"Tomatoes and potatoes are both in the nightshade family and can share late blight."}
+};
+const monthNames=Object.keys(calendar), now=new Date(), month=now.toLocaleString('en-NZ',{month:'long'});
+let currentPlant=null, previousView='home', chosenMonth=monthNames[now.getMonth()];
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='saved')renderSaved();if(id==='calendar')renderCalendar();if(id==='companions')setupCompanions();window.scrollTo(0,0)}
+function goBack(){showView(previousView)}
+function card(p){return `<div class="tile" onclick="openPlant('${p.id}')"><div class="emoji">${p.emoji}</div><strong>${p.name}</strong><span>${p.sci}</span></div>`}
+function renderCatalog(type){let searchId=type==='ornamental'?'ornSearch':type==='vegetable'?'vegSearch':'fruitSearch';let listId=type==='ornamental'?'ornList':type==='vegetable'?'vegList':'fruitList';let q=document.getElementById(searchId).value.toLowerCase();let list=plants.filter(p=>p.type===type&&(`${p.name} ${p.sci}`).toLowerCase().includes(q));document.getElementById(listId).innerHTML=list.map(card).join('')||'<p class="muted">No plants found.</p>'}
+function openPlant(id){let p=plants.find(x=>x.id===id);if(!p)return;previousView=document.querySelector('.view.active').id;currentPlant=p;renderDetail(p);showView('detail')}
+function renderDetail(p){document.getElementById('detailContent').innerHTML=`<div class="panel"><div style="font-size:42px">${p.emoji}</div><h2 style="margin:2px 0">${p.name}</h2><i class="muted">${p.sci}</i><p><span class="pill">${p.type==='vegetable'?'Vegetable / herb':p.type==='fruit'?'Fruit tree':'Ornamental'}</span><span class="pill">NZ care guide</span></p><div class="care-grid"><div class="care"><b>☀️ SUNLIGHT</b><span>${p.sun}</span></div><div class="care"><b>🏡 LOCATION</b><span>${p.place}</span></div><div class="care"><b>💧 WATERING</b><span>${p.water}</span></div><div class="care"><b>🪴 SOIL</b><span>${p.soil}</span></div></div><h3>🌱 Fertilizer & timing</h3><p>${p.feed}</p><p><b>Planting / repotting:</b> ${p.months}</p><h3>🤝 Companion plants</h3><p>${p.companions.join(', ')}</p><p><b>Avoid:</b> ${p.avoid.join(', ')}</p><h3>✂️ Pruning & care</h3><p>${p.prune}</p><h3>🧺 Harvest / flowering</h3><p>${p.harvest}</p><div class="notice">MyGarden tip: ${p.tips}</div><button style="width:100%;margin-top:14px" onclick="savePlant('${p.id}')">＋ Save to My plants</button></div>`}
+function savePlant(id){let s=JSON.parse(localStorage.getItem('mygarden_saved')||'[]');if(!s.includes(id)){s.push(id);localStorage.setItem('mygarden_saved',JSON.stringify(s))}alert('Saved to My plants')}
+function renderSaved(){let s=JSON.parse(localStorage.getItem('mygarden_saved')||'[]');let found=plants.filter(p=>s.includes(p.id));document.getElementById('savedList').innerHTML=found.length?found.map(p=>`<div class="result"><div style="font-size:30px">${p.emoji}</div><div style="flex:1"><b>${p.name}</b><div class="small muted">${p.sci}</div><button class="secondary" style="margin-top:5px" onclick="openPlant('${p.id}')">Open care guide</button></div><button class="ghost" onclick="removeSaved('${p.id}')">Remove</button></div>`).join(''):'<p class="muted">No saved plants yet. Open a plant guide and tap “Save to My plants”.</p>'}
+function removeSaved(id){let s=JSON.parse(localStorage.getItem('mygarden_saved')||'[]').filter(x=>x!==id);localStorage.setItem('mygarden_saved',JSON.stringify(s));renderSaved()}
+function renderCalendar(){let region=document.getElementById('region').value;document.getElementById('calendarMonths').innerHTML=monthNames.map(m=>`<div class="month ${m===chosenMonth?'current':''}" onclick="chosenMonth='${m}';renderCalendar()">${m.slice(0,3)}</div>`).join('');let items=calendar[chosenMonth]||[];let regionalNote=region.includes('Otago')?'Cooler conditions: delay tender crops until frost risk has passed and use sheltered sites.':region.includes('Canterbury')?'Protect seedlings from drying winds and hot, dry spells.':region.includes('Auckland')?'Warmer conditions may allow a longer growing season; watch humidity and pests.':region.includes('Central')?'Frost risk can last longer; use sheltered beds and wait for warm soil.':'Wellington is windy: use shelter, stake tall crops and protect tender seedlings.';document.getElementById('calendarContent').innerHTML=`<h3>${chosenMonth} – what to plant</h3><p>${items.map(x=>`<span class="pill">${x}</span>`).join(' ')}</p><p class="small muted">${regionalNote}</p>`}
+function setupCompanions(){let sel=document.getElementById('compSelect');if(!sel.options.length)sel.innerHTML=Object.keys(companions).map(x=>`<option>${x}</option>`).join('');renderCompanions()}
+function renderCompanions(){let n=document.getElementById('compSelect').value||'Tomato',c=companions[n];document.getElementById('compContent').innerHTML=`<h3>${n}</h3><p><b>Good companions</b><br>${c.good}</p><p><b>Keep apart / use caution</b><br>${c.avoid}</p><p class="muted">${c.why}</p><div class="notice">Companion planting evidence varies. Correct spacing, crop rotation, soil health and pest monitoring remain important.</div>`}
+document.getElementById('plantPhoto').addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;let img=document.getElementById('preview');img.src=URL.createObjectURL(f);img.classList.remove('hidden');document.getElementById('idResults').innerHTML='';});
+function saveKey(){let k=document.getElementById('apiKey').value.trim();if(!k){alert('Paste your API key first.');return}localStorage.setItem('mygarden_plantnet_key',k);document.getElementById('keyStatus').textContent='API key saved on this phone.';document.getElementById('apiKey').value=''}
+async function identifyPlant(){let file=document.getElementById('plantPhoto').files[0],key=localStorage.getItem('mygarden_plantnet_key');let status=document.getElementById('idStatus'),out=document.getElementById('idResults');if(!file){status.textContent='Please take or choose a plant photo first.';return}if(!key){status.textContent='Please add your Pl@ntNet API key in Settings first.';return}let btn=document.getElementById('identifyBtn');btn.disabled=true;status.textContent='Sending photo for AI identification…';out.innerHTML='';try{let form=new FormData();form.append('images',file,file.name||'plant.jpg');form.append('organs','auto');let res=await fetch('https://my-api.plantnet.org/v2/identify/all?api-key='+encodeURIComponent(key)+'&lang=en&nb-results=5',{method:'POST',body:form});let data=await res.json();if(!res.ok)throw new Error(data.message||data.error||('Request failed ('+res.status+')'));let html=`<h3>Possible identification</h3>`;for(let r of (data.results||[])){let score=Math.round((r.score||0)*100),sci=r.species?.scientificNameWithoutAuthor||r.species?.scientificName||'Unknown species',names=r.species?.commonNames||[];html+=`<div class="result"><div style="flex:1"><b>${sci}</b><div class="small muted">${names.slice(0,3).join(', ')||'Common name unavailable'}</div><span class="pill">${score}% match</span></div></div>`;let match=plants.find(p=>p.sci.toLowerCase().startsWith(sci.split(' ').slice(0,2).join(' ').toLowerCase())||p.name.toLowerCase()===names[0]?.toLowerCase());if(match)html+=`<button class="secondary" onclick="openPlant('${match.id}')">Open MyGarden care guide for ${match.name}</button>`}out.innerHTML=html||'No likely species returned. Try a clearer photo of the leaf or flower.';status.textContent='Identification complete. Compare the suggestions before relying on a result.'}catch(err){status.textContent='Could not identify this photo: '+err.message+'. Check internet, API key and authorized domain settings.'}finally{btn.disabled=false}}
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+renderCatalog('ornamental');renderCatalog('vegetable');renderCatalog('fruit');renderCalendar();document.getElementById('compSelect').innerHTML=Object.keys(companions).map(x=>`<option>${x}</option>`).join('');
+</script>
+</body></html>
